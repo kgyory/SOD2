@@ -12,12 +12,12 @@ class Person:
 
 
 class PersonFactory:
-    idcounter = 0  # So würde ich die IDs verwalten. Hast eine andere Idee?
+    idcounter = 0
 
     def create_person(self, name):
+        p = Person(PersonFactory.idcounter, name)
         PersonFactory.idcounter += 1
-        return Person(PersonFactory.idcounter - 1, name)  # Ziemlich schräge Lösung, aber so
-        # habe ich hinbekommen  inkrementieren aber doch mit return zurückzugeben
+        return p
 
 
 class Point:
@@ -36,8 +36,6 @@ class Line:
     def deep_copy(self):
         result = copy.deepcopy(self)
         return result
-    # beim Test kommt das durch, die Frage ist, wie man dieses Objekt dann aufrufen kann
-    # weil die Linie keinen Namen als Variable hat. Muss man hier eine Name basteln?
 
 
 class Evaluate(TestCase):
