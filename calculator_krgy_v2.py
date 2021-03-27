@@ -123,28 +123,21 @@ class Ergebnis(Operation):
 
 
 class OperationFactory:     # called as Calculator is initialized, this class will initialize and execute the ops
-    initialized = False     # to make sure initialized only once
-    operations = {}         # dictionary to store and call initialized operations
 
-    dict_operations = {('+', 'add', 'plus'): 'Addition',            # allowed operands and the respective operations
-                       ('-', 'sub', 'minus'): 'Subtraktion',        # eventual new operations and operands have to be
-                       ('*', 'mal'): 'Multiplikation',              # added here
-                       ('/', 'div'): 'Dividieren',
-                       ('=', 'ergebnis'): 'Ergebnis'}
+    dict_operations = {('+', 'add', 'plus'): Addition(),            # allowed operands and the respective operations
+                       ('-', 'sub', 'minus'): Subtraktion(),        # eventual new operations and operands have to be
+                       ('*', 'mal'): Multiplikation(),              # added here
+                       ('/', 'div'): Dividieren(),
+                       ('=', 'ergebnis'): Ergebnis()}
 
-    def __init__(self):                                         # to initialize operations
-        if not self.initialized:
-            self.initialized = True
-            for value in self.dict_operations.values():
-                operation_name = value                          # this is used later to call the ops
-                operation_instance = eval(value)()              # ops initialized
-                self.operations[value] = operation_instance     # the initialized ops added to a dict
+    def __init__(self):
+        for i in self.dict_operations.values():
+            i
 
     def call_operation(self):                                   # execute op based on the last input operand
-        for key in self.dict_operations.keys():
-            if Calculator().current_operand in key:
-                return self.operations[self.dict_operations[key]].do_operation()
-
+        for k, v in self.dict_operations.items():
+            if Calculator().current_operand in k:
+                return v.do_operation()
 
 if __name__ == '__main__':
     a = Calculator()
