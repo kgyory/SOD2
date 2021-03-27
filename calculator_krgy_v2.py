@@ -2,7 +2,7 @@ from abc import ABC
 
 
 class Singleton(type):  # Singleton, so no new instance if the variable is called for the operations
-    _instances = {}
+    _instances = {}     # maybe other, simpler Singleton version can be used, I only managed with this
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
@@ -11,7 +11,7 @@ class Singleton(type):  # Singleton, so no new instance if the variable is calle
         return cls._instances[cls]
 
 
-class Calculator(metaclass=Singleton):
+class Calculator(metaclass=Singleton):      # main class, this has to be initialized to run the calculations
 
     def __init__(self):
         self.current_first_number = None
@@ -85,7 +85,7 @@ class Calculator(metaclass=Singleton):
                     except ValueError:
                         print('Zahl darf int oder float sein')              # incorrect format, ask for new input
 
-    def get_operand(self):                  # method to read in number, check correct number format
+    def get_operand(self):                  # method to read in operand, check if allowed operand
         while True:                         # loop until allowed operand input or terminated by user
             self.current_operand = input('Operand eingeben:\n')
             if self.current_operand == 'E':
@@ -130,7 +130,7 @@ class Ergebnis(Operation):
 
 
 class OperationFactory:     # called as Calculator is initialized, this class will initialize and execute the ops
-    initialized = False     # to make sure initialized once
+    initialized = False     # to make sure initialized only once
     operations = {}         # dictionary to store and call initialized operations
 
     dict_operations = {('+', 'add', 'plus'): 'Addition',            # allowed operands and the respective operations
