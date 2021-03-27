@@ -22,13 +22,6 @@ class Calculator(metaclass=Singleton):      # main class, this has to be initial
         self.allowed_operands_list = []
         self.fact = OperationFactory()      # initializes Factory so that the operations get initialized
 
-    _instance = None                        # for Singleton
-
-    def __new__(cls, *args, **kwargs):      # for Singleton
-        if not cls._instance:
-            cls._instance = super(Calculator, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
     def calculate(self):
         for key in OperationFactory.dict_operations.keys():     # compile a list of allowed operands to print at
             self.allowed_operands_list.extend(list(key))        # start and also for error message
