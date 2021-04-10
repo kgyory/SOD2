@@ -43,18 +43,6 @@ class ResponsiblePerson:
         return 'dead'
 
 
-# if __name__ == '__main__':
-#     p = Person(10)
-#     rp = ResponsiblePerson(p)
-#
-#     print(rp.age)
-#     print(rp.drive())
-#
-#     rp.age = 20
-#
-#     print()
-#     print(rp.drive())
-
 class Evaluate(TestCase):
     def test_exercise(self):
         p = Person(10)
