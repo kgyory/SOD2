@@ -4,15 +4,9 @@
 # Given that a rat enters play through the initializer and leave play (dies)
 # via its __exit__ method, please implement the Game and Rat classes so that at,
 # any point in the game the attack value of a rat is always consistent.
-
-
-
+from abc import ABC, abstractmethod
 from unittest import TestCase
 
-# class Event(list):
-#     def __call__(self, *args, **kwargs):
-#         for item in self:
-#             item(*args, **kwargs)
 
 class Game:
     def __init__(self):
@@ -28,9 +22,16 @@ class Game:
 
     def notify(self):
         for observer in self.rats:
-            observer.update_attack_value()
+            observer.update()
 
-class Rat:
+
+class IObserver(ABC):
+    @abstractmethod
+    def update(self):
+        pass
+
+
+class Rat(IObserver):
     def __init__(self, game):
         self.game = game
         self.attack = 1
@@ -39,15 +40,18 @@ class Rat:
     def rat_dies(self):
         self.game.unsubscribe(self)
 
+    def update(self):
+        self.update_attack_value()
+
     def update_attack_value(self):
         self.attack = len(self.game.rats)
-
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.rat_dies()
+
 
 class Evaluate(TestCase):
     def test_single_rat(self):
